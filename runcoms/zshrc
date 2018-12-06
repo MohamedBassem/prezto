@@ -11,3 +11,25 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi
 
 # Customize to your needs...
+
+alias ll='ls -alhF'
+
+#Custom Vars
+export EDITOR=vim
+
+# rbenv Installation
+#export PATH="$HOME/.rbenv/bin:$PATH"
+#eval "$(rbenv init -)"
+PATH=$PATH:$HOME/bin
+PATH=$PATH:$HOME/usr/bin
+
+# Go Installation
+export GOPATH=~/repos/go
+export PATH="$PATH:/usr/local/go/bin"
+export PATH="$PATH:$GOPATH/bin"
+
+export TERM=screen-256color
+
+alias resetaudio='sudo killall coreaudiod'
+
+export PATH="$HOME/.cargo/bin:$PATH"
