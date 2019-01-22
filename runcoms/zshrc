@@ -16,6 +16,7 @@ alias ll='ls -alhF'
 
 #Custom Vars
 export EDITOR=vim
+export HGEDITOR=vim
 
 # rbenv Installation
 #export PATH="$HOME/.rbenv/bin:$PATH"
@@ -33,3 +34,5 @@ export TERM=screen-256color
 alias resetaudio='sudo killall coreaudiod'
 
 export PATH="$HOME/.cargo/bin:$PATH"
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
