@@ -18,6 +18,11 @@ alias ll='ls -alhF'
 alias vim="nvim"
 alias vi="nvim"
 
+# Print the nth column
+function pcol() {
+  awk "{print \$$1}"
+}
+
 #Custom Vars
 export EDITOR=nvim
 export HGEDITOR=nvim
