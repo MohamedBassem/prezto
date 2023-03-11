@@ -41,6 +41,7 @@ zstyle ':prezto:load' pmodule \
   'prompt' \
   'syntax-highlighting' \
   'tmux' \
+  'git' \
   'autosuggestions' \
   'ssh'
 
@@ -238,7 +239,7 @@ zstyle ':prezto:module:prompt' pwd-length 'long'
 #
 
 # Auto start a session when Zsh is launched in a local terminal.
-zstyle ':prezto:module:tmux:auto-start' local 'no'
+zstyle ':prezto:module:tmux:auto-start' local 'yes'
 
 # Auto start a session when Zsh is launched in a SSH connection.
 zstyle ':prezto:module:tmux:auto-start' remote 'yes'
