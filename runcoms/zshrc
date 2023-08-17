@@ -14,9 +14,13 @@ fi
 
 alias ll='ls -alhF'
 
+# Map vim to nvim
+alias vim="nvim"
+alias vi="nvim"
+
 #Custom Vars
-export EDITOR=vim
-export HGEDITOR=vim
+export EDITOR=nvim
+export HGEDITOR=nvim
 
 # rbenv Installation
 #export PATH="$HOME/.rbenv/bin:$PATH"
@@ -35,8 +39,10 @@ alias resetaudio='sudo killall coreaudiod'
 
 export PATH="$HOME/.cargo/bin:$PATH"
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" --no-use  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+eval "$(atuin init zsh --disable-up-arrow)"
+
