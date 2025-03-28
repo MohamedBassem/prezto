@@ -13,17 +13,18 @@ fi
 # Customize to your needs...
 
 alias ll='ls -alhF'
+alias vim=nvim
 
 # Map vim to nvim
 alias vim="nvim"
 alias vi="nvim"
 
 # Print the nth column
-function pcol() {
+function awkp() {
   awk "{print \$$1}"
 }
 
-#Custom Vars
+# custom Vars
 export EDITOR=nvim
 export HGEDITOR=nvim
 
@@ -35,19 +36,37 @@ PATH=$PATH:$HOME/usr/bin
 
 # Go Installation
 export GOPATH=~/repos/go
-export PATH="$PATH:/usr/local/go/bin"
+  export PATH="$PATH:/usr/local/go/bin"
 export PATH="$PATH:$GOPATH/bin"
 
-export TERM=screen-256color
+# uv
+export PATH="/home/mbassem/.local/bin:$PATH"
 
-alias resetaudio='sudo killall coreaudiod'
-
+# cargo
 export PATH="$HOME/.cargo/bin:$PATH"
+[ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
 
-
+# nvim
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" --no-use  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-eval "$(atuin init zsh --disable-up-arrow)"
+# atuin
+[ -x "$(command -v atuin)" ] && eval "$(atuin init zsh --disable-up-arrow)"
 
+[ -f "${LOCAL_ADMIN_SCRIPTS}/master.zshrc" ] && source "${LOCAL_ADMIN_SCRIPTS}/master.zshrc"
+
+# zoxide
+[ -x "$(command -v zoxide)" ] && eval "$(zoxide init zsh)"
+
+# fzf
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# brew
+[ -x "$(command -v brew)" ] && eval "$(/opt/homebrew/bin/brew shellenv)"
+
+
+export TERM=screen-256color
+
+alias resetaudio='sudo killall coreaudiod'
+alias xstream='xstream-rs'
