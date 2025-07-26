@@ -14,6 +14,7 @@ fi
 
 # Customize to your needs...
 
+alias ls='ls -F --color=auto'
 alias ll='ls -alhF'
 alias vim=nvim
 
@@ -66,8 +67,25 @@ export NVM_DIR="$HOME/.nvm"
 [ -f /opt/homebrew/bin/brew ] && eval "$(/opt/homebrew/bin/brew shellenv)"
 [ -f /home/linuxbrew/.linuxbrew/bin/brew ] && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
+# direnv
+[ -x "$(command -v direnv)" ] && eval "$(direnv hook zsh)"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+# Android SDK
+export ANDROID_HOME="$HOME/Library/Android/sdk"
+
+# Volta
+export VOLTA_HOME="$HOME/.volta"
+export PATH="$VOLTA_HOME/bin:$PATH"
+
+# FZF with catppuccin theme
+export FZF_DEFAULT_OPTS="--color=bg+:#414559,bg:#303446,spinner:#f2d5cf,hl:#e78284 --color=fg:#c6d0f5,header:#e78284,info:#ca9ee6,pointer:#f2d5cf --color=marker:#f2d5cf,fg+:#c6d0f5,prompt:#ca9ee6,hl+:#e78284"
 
 export TERM=screen-256color
 
 alias resetaudio='sudo killall coreaudiod'
 alias xstream='xstream-rs'
+alias claude="/home/mbassem/.claude/local/claude"
