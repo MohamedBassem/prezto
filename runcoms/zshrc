@@ -92,3 +92,6 @@ export TERM=screen-256color
 alias resetaudio='sudo killall coreaudiod'
 alias xstream='xstream-rs'
 alias claude="/home/mbassem/.claude/local/claude"
+
+# Android
+export ANDROID_HOME="$HOME/Library/Android/sdk"
