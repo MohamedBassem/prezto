@@ -14,8 +14,14 @@ fi
 
 # Customize to your needs...
 
-alias ls='ls -F --color=auto'
+# if on mac
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  alias ls='ls -GF'
+  alias ll='ls -alhFG'
+else
+  alias ls='ls -F --color=auto'
 alias ll='ls -alhF'
+fi
 alias vim=nvim
 
 # Map vim to nvim
@@ -63,9 +69,19 @@ export NVM_DIR="$HOME/.nvm"
 # fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+# Android SDK
+export ANDROID_HOME="$HOME/Library/Android/sdk"
+export PATH="$ANDROID_HOME/platform-tools:$PATH"
+export PATH="$ANDROID_HOME/emulator:$PATH"
+export PATH="$ANDROID_HOME/tools:$PATH"
+export PATH="$ANDROID_HOME/tools/bin:$PATH"
+
 # brew
 [ -f /opt/homebrew/bin/brew ] && eval "$(/opt/homebrew/bin/brew shellenv)"
 [ -f /home/linuxbrew/.linuxbrew/bin/brew ] && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
+# Prioritize Homebrew sqlite over Android SDK
+export PATH="/opt/homebrew/opt/sqlite/bin:$PATH"
 
 # direnv
 [ -x "$(command -v direnv)" ] && eval "$(direnv hook zsh)"
@@ -73,9 +89,6 @@ export NVM_DIR="$HOME/.nvm"
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
-
-# Android SDK
-export ANDROID_HOME="$HOME/Library/Android/sdk"
 
 # Volta
 export VOLTA_HOME="$HOME/.volta"
@@ -87,11 +100,18 @@ export PATH="$HOME/.pulumi/bin:$PATH"
 # FZF with catppuccin theme
 export FZF_DEFAULT_OPTS="--color=bg+:#414559,bg:#303446,spinner:#f2d5cf,hl:#e78284 --color=fg:#c6d0f5,header:#e78284,info:#ca9ee6,pointer:#f2d5cf --color=marker:#f2d5cf,fg+:#c6d0f5,prompt:#ca9ee6,hl+:#e78284"
 
-export TERM=screen-256color
+# Don't set TERM here - let tmux control it
 
 alias resetaudio='sudo killall coreaudiod'
 alias xstream='xstream-rs'
-alias claude="/home/mbassem/.claude/local/claude"
 
-# Android
-export ANDROID_HOME="$HOME/Library/Android/sdk"
+# bun completions
+[ -s "/Users/mbassem/.bun/_bun" ] && source "/Users/mbassem/.bun/_bun"
+
+# Java Configuration (Android Studio Bundled JDK)
+export JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home"
+export PATH="$JAVA_HOME/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
+
+# Amp CLI
+export PATH="/Users/mbassem/.amp/bin:$PATH"
