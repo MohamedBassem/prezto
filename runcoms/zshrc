@@ -95,6 +95,9 @@ export PATH="/opt/homebrew/opt/sqlite/bin:$PATH"
 # direnv
 [ -x "$(command -v direnv)" ] && eval "$(direnv hook zsh)"
 
+# eza
+export EZA_ICONS_AUTO=1
+
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
