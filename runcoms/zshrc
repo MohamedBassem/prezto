@@ -72,7 +72,7 @@ export PATH="/home/mbassem/.local/bin:$PATH"
 export PATH="$HOME/.cargo/bin:$PATH"
 [ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
 
-# nvim
+# nvm
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" --no-use  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
@@ -116,13 +116,14 @@ export PATH="$VOLTA_HOME/bin:$PATH"
 # Pulumi
 export PATH="$HOME/.pulumi/bin:$PATH"
 
-# FZF with catppuccin theme
-export FZF_DEFAULT_OPTS="--color=bg+:#414559,bg:#303446,spinner:#f2d5cf,hl:#e78284 --color=fg:#c6d0f5,header:#e78284,info:#ca9ee6,pointer:#f2d5cf --color=marker:#f2d5cf,fg+:#c6d0f5,prompt:#ca9ee6,hl+:#e78284"
-
-# Don't set TERM here - let tmux control it
-
-alias resetaudio='sudo killall coreaudiod'
-alias xstream='xstream-rs'
+# catppuccin-fzf-macchiato
+# from https://github.com/catppuccin/fzf/blob/main/themes/catppuccin-fzf-macchiato.sh
+export FZF_DEFAULT_OPTS=" \
+--color=bg+:#363A4F,bg:#24273A,spinner:#F4DBD6,hl:#ED8796 \
+--color=fg:#CAD3F5,header:#ED8796,info:#C6A0F6,pointer:#F4DBD6 \
+--color=marker:#B7BDF8,fg+:#CAD3F5,prompt:#C6A0F6,hl+:#ED8796 \
+--color=selected-bg:#494D64 \
+--color=border:#6E738D,label:#CAD3F5"
 
 # bun completions
 [ -s "/Users/mbassem/.bun/_bun" ] && source "/Users/mbassem/.bun/_bun"
@@ -132,5 +133,5 @@ export JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home"
 export PATH="$JAVA_HOME/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 
-# Amp CLI
-export PATH="/Users/mbassem/.amp/bin:$PATH"
+# Restate
+export DO_NOT_TRACK=1
