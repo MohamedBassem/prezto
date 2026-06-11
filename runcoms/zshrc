@@ -116,14 +116,6 @@ export PATH="$VOLTA_HOME/bin:$PATH"
 # Pulumi
 export PATH="$HOME/.pulumi/bin:$PATH"
 
-# catppuccin-fzf-macchiato
-# from https://github.com/catppuccin/fzf/blob/main/themes/catppuccin-fzf-macchiato.sh
-export FZF_DEFAULT_OPTS=" \
---color=bg+:#363A4F,bg:#24273A,spinner:#F4DBD6,hl:#ED8796 \
---color=fg:#CAD3F5,header:#ED8796,info:#C6A0F6,pointer:#F4DBD6 \
---color=marker:#B7BDF8,fg+:#CAD3F5,prompt:#C6A0F6,hl+:#ED8796 \
---color=selected-bg:#494D64 \
---color=border:#6E738D,label:#CAD3F5"
 
 # bun completions
 [ -s "/Users/mbassem/.bun/_bun" ] && source "/Users/mbassem/.bun/_bun"
@@ -135,3 +127,9 @@ export PATH="$HOME/.local/bin:$PATH"
 
 # Restate
 export DO_NOT_TRACK=1
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/mbassem/repos/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/mbassem/repos/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/mbassem/repos/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/mbassem/repos/google-cloud-sdk/completion.zsh.inc'; fi
