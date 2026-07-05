@@ -17,6 +17,12 @@ if [[ "$OSTYPE" == darwin* && -x /opt/homebrew/bin/brew ]]; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
+# brew shellenv above re-prepends /opt/homebrew, which would shadow the
+# volta/bun node toolchains that .zprofile placed ahead of it. Re-assert their
+# precedence so volta-managed node keeps winning (also covers non-login shells,
+# where .zprofile does not run). (N) drops the entries if the dirs are absent.
+path=($HOME/.volta/bin(N) $HOME/.bun/bin(N) $path)
+
 # Prefer a Homebrew-managed ssh-agent over macOS's launchd socket.
 if [[ "$OSTYPE" == darwin* && "$SSH_AUTH_SOCK" == /var/run/com.apple.launchd.* ]]; then
   unset SSH_AUTH_SOCK
@@ -31,16 +37,17 @@ fi
 
 # Customize to your needs...
 
-# if on mac
-if [[ "$OSTYPE" == "darwin"* ]]; then
+# ls: prefer eza when installed, otherwise fall back per-OS
+if [ -x "$(command -v eza)" ]; then
+  alias ls='eza'
+  alias ll='eza -la --git'
+elif [[ "$OSTYPE" == "darwin"* ]]; then
   alias ls='ls -GF'
   alias ll='ls -alhFG'
 else
   alias ls='ls -F --color=auto'
-alias ll='ls -alhF'
+  alias ll='ls -alhF'
 fi
-alias vim=nvim
-
 # Map vim to nvim
 alias vim="nvim"
 alias vi="nvim"
@@ -54,28 +61,41 @@ function awkp() {
 export EDITOR=nvim
 export HGEDITOR=nvim
 
-# rbenv Installation
-#export PATH="$HOME/.rbenv/bin:$PATH"
-#eval "$(rbenv init -)"
-PATH=$PATH:$HOME/bin
-PATH=$PATH:$HOME/usr/bin
-
-# Go Installation
+# Tool homes (env vars only; PATH entries are consolidated in .zprofile)
 export GOPATH=~/repos/go
-  export PATH="$PATH:/usr/local/go/bin"
-export PATH="$PATH:$GOPATH/bin"
+export BUN_INSTALL="$HOME/.bun"
+export VOLTA_HOME="$HOME/.volta"
 
-# uv
-export PATH="/home/mbassem/.local/bin:$PATH"
+# Java / Android (Android Studio bundled JDK). Global env so java tooling works
+# everywhere; guarded with [[ -d ]] so machines without Android Studio/the SDK
+# are unaffected. (N) drops PATH entries whose dir is missing.
+if [[ -d "/Applications/Android Studio.app/Contents/jbr/Contents/Home" ]]; then
+  export JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home"
+  path=($JAVA_HOME/bin(N) $path)
+fi
+if [[ -d "$HOME/Library/Android/sdk" ]]; then
+  export ANDROID_HOME="$HOME/Library/Android/sdk"
+  path=($ANDROID_HOME/platform-tools(N) $ANDROID_HOME/emulator(N) $path)
+fi
 
-# cargo
-export PATH="$HOME/.cargo/bin:$PATH"
+# cargo (its env script sets PATH itself)
 [ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
 
-# nvm
+# nvm (lazy-loaded; previously sourced with --no-use, so no node was on PATH
+# at startup anyway — this just defers parsing nvm.sh until first use)
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" --no-use  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+nvm() {
+  unset -f nvm
+  [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+  nvm "$@"
+}
+
+# fzf (before atuin so atuin's Ctrl-R binding wins)
+if [ -x "$(command -v fzf)" ]; then
+  source <(fzf --zsh)
+  export FZF_DEFAULT_COMMAND='fd --type f --hidden --exclude .git'
+  export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+fi
 
 # atuin
 [ -x "$(command -v atuin)" ] && eval "$(atuin init zsh --disable-up-arrow)"
@@ -83,21 +103,8 @@ export NVM_DIR="$HOME/.nvm"
 # zoxide
 [ -x "$(command -v zoxide)" ] && eval "$(zoxide init zsh)"
 
-# fzf
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-# Android SDK
-export ANDROID_HOME="$HOME/Library/Android/sdk"
-export PATH="$ANDROID_HOME/platform-tools:$PATH"
-export PATH="$ANDROID_HOME/emulator:$PATH"
-export PATH="$ANDROID_HOME/tools:$PATH"
-export PATH="$ANDROID_HOME/tools/bin:$PATH"
-
 # brew
 [ -f /home/linuxbrew/.linuxbrew/bin/brew ] && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-
-# Prioritize Homebrew sqlite over Android SDK
-export PATH="/opt/homebrew/opt/sqlite/bin:$PATH"
 
 # direnv
 [ -x "$(command -v direnv)" ] && eval "$(direnv hook zsh)"
@@ -105,28 +112,8 @@ export PATH="/opt/homebrew/opt/sqlite/bin:$PATH"
 # eza
 export EZA_ICONS_AUTO=1
 
-# bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
-
-# Volta
-export VOLTA_HOME="$HOME/.volta"
-export PATH="$VOLTA_HOME/bin:$PATH"
-
-# Pulumi
-export PATH="$HOME/.pulumi/bin:$PATH"
-
-
 # bun completions
-[ -s "/Users/mbassem/.bun/_bun" ] && source "/Users/mbassem/.bun/_bun"
-
-# Java Configuration (Android Studio Bundled JDK)
-export JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home"
-export PATH="$JAVA_HOME/bin:$PATH"
-export PATH="$HOME/.local/bin:$PATH"
-
-# Restate
-export DO_NOT_TRACK=1
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/Users/mbassem/repos/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/mbassem/repos/google-cloud-sdk/path.zsh.inc'; fi
